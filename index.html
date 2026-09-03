@@ -214,8 +214,9 @@
   .ticket-actions button{border:0;border-radius:14px;padding:12px 10px;font-weight:950}
   .ticket-download{background:#fff0da;color:#251719}
   .ticket-send{background:#25D366;color:#092d17}
-  .ticket-edit{grid-column:1/-1;background:#29292d;color:#fff}
-  @media(max-width:520px){.ticket-paper{padding:18px;border-radius:20px}.ticket-meta{grid-template-columns:1fr}.ticket-actions{grid-template-columns:1fr}.ticket-edit{grid-column:auto}.ticket-modal{align-items:flex-start}}
+  .ticket-edit{background:#29292d;color:#fff}
+  .ticket-close-order{background:#5d2329;color:#fff}
+  @media(max-width:520px){.ticket-paper{padding:18px;border-radius:20px}.ticket-meta{grid-template-columns:1fr}.ticket-actions{grid-template-columns:1fr}.ticket-modal{align-items:flex-start}}
 
 </style>
 </head>
@@ -360,6 +361,7 @@
       <button class="ticket-download" id="downloadTicket">Descargar imagen</button>
       <button class="ticket-send" id="confirmSendWhatsApp">Enviar por WhatsApp</button>
       <button class="ticket-edit" id="closeTicket">Seguir editando el pedido</button>
+      <button class="ticket-close-order" id="finishTicket">Cerrar pedido</button>
     </div>
   </div>
 </div>
@@ -413,7 +415,16 @@ const PRODUCTS = [
   {id:70,cat:"Extras",name:"Shot de café",price:14,desc:"Agrega un shot de café a cualquier frappé."}
 ];
 
-let cart = JSON.parse(localStorage.getItem("casitaCart") || "[]");
+const ORDER_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutos sin actividad
+let orderIdleTimer = null;
+let cart = [];
+try { cart = JSON.parse(localStorage.getItem("casitaCart") || "[]"); } catch(e) { cart = []; }
+const savedCartUpdatedAt = Number(localStorage.getItem("casitaCartUpdatedAt") || 0);
+if(cart.length && (!savedCartUpdatedAt || Date.now() - savedCartUpdatedAt > ORDER_TIMEOUT_MS)){
+  cart = [];
+  localStorage.removeItem("casitaCart");
+  localStorage.removeItem("casitaCartUpdatedAt");
+}
 let activeCat = "Todos";
 
 const $ = s => document.querySelector(s);
@@ -467,9 +478,32 @@ function addToCart(id){
   toast("Agregado al pedido");
 }
 
+function scheduleOrderTimeout(){
+  clearTimeout(orderIdleTimer);
+  if(!cart.length) return;
+  const updatedAt = Number(localStorage.getItem("casitaCartUpdatedAt") || Date.now());
+  const remaining = Math.max(0, ORDER_TIMEOUT_MS - (Date.now() - updatedAt));
+  orderIdleTimer = setTimeout(()=>{
+    if(cart.length) clearCompletedOrder("Pedido cerrado automáticamente por inactividad");
+  }, remaining);
+}
+
+function touchOrderActivity(){
+  if(!cart.length) return;
+  localStorage.setItem("casitaCartUpdatedAt", String(Date.now()));
+  scheduleOrderTimeout();
+}
+
 function saveCart(){
-  localStorage.setItem("casitaCart", JSON.stringify(cart));
+  if(cart.length){
+    localStorage.setItem("casitaCart", JSON.stringify(cart));
+    localStorage.setItem("casitaCartUpdatedAt", String(Date.now()));
+  } else {
+    localStorage.removeItem("casitaCart");
+    localStorage.removeItem("casitaCartUpdatedAt");
+  }
   renderCart();
+  scheduleOrderTimeout();
 }
 
 function renderCart(){
@@ -568,6 +602,7 @@ async function downloadTicketImage(){
     link.download = `Comanda-${currentTicketData.folio}.png`;
     link.href = canvas.toDataURL("image/png");
     link.click();
+    touchOrderActivity();
   }catch(err){ console.error(err); toast("No se pudo generar la imagen"); }
 }
 
@@ -582,9 +617,11 @@ function buildWhatsAppText(order){
   return lines.join("\n");
 }
 
-function clearCompletedOrder(){
+function clearCompletedOrder(message="Pedido cerrado"){
   cart = [];
   localStorage.removeItem("casitaCart");
+  localStorage.removeItem("casitaCartUpdatedAt");
+  clearTimeout(orderIdleTimer);
   renderCart();
   $("#customerName").value = "";
   $("#serviceType").value = "Pick up";
@@ -594,7 +631,11 @@ function clearCompletedOrder(){
   currentTicketData = null;
   closeTicketPreview(false);
   closeCart();
-  toast("Pedido enviado y cerrado");
+  toast(message);
+}
+
+function finishOrder(){
+  clearCompletedOrder("Pedido cerrado. Listo para un nuevo cliente");
 }
 
 function sendWhatsApp(){
@@ -602,7 +643,7 @@ function sendWhatsApp(){
   const phone = "529381249478";
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(buildWhatsAppText(currentTicketData))}`;
   window.open(url,"_blank");
-  clearCompletedOrder();
+  clearCompletedOrder("Pedido enviado y cerrado");
 }
 
 document.querySelectorAll(".chip").forEach(btn=>{
@@ -620,10 +661,16 @@ $("#overlay").addEventListener("click",closeCart);
 $("#sendWhatsApp").addEventListener("click",showTicketPreview);
 $("#confirmSendWhatsApp").addEventListener("click",sendWhatsApp);
 $("#downloadTicket").addEventListener("click",downloadTicketImage);
-$("#closeTicket").addEventListener("click",()=>closeTicketPreview(true));
+$("#closeTicket").addEventListener("click",()=>{ touchOrderActivity(); closeTicketPreview(true); });
+$("#finishTicket").addEventListener("click",finishOrder);
+["#customerName","#serviceType","#payment","#address","#notes"].forEach(id=>{
+  $(id).addEventListener("input",touchOrderActivity);
+  $(id).addEventListener("change",touchOrderActivity);
+});
 
 renderProducts();
 renderCart();
+scheduleOrderTimeout();
 </script>
 </body>
 </html>
