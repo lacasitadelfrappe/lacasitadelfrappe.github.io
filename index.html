@@ -271,13 +271,7 @@
     </div>
     <div class="controls">
       <input class="search" id="search" placeholder="Buscar: Oreo, waffle, café...">
-      <button class="chip active" data-cat="Todos">Todos</button>
-      <button class="chip" data-cat="Frappés">Frappés</button>
-      <button class="chip" data-cat="Cafés">Cafés</button>
-      <button class="chip" data-cat="Cafés fríos">Cafés fríos</button>
-      <button class="chip" data-cat="Sodas">Sodas</button>
-      <button class="chip" data-cat="Comida">Comida</button>
-      <button class="chip" data-cat="Desayunos">Desayunos</button>
+      <div id="categoryChips" style="display:contents"></div>
     </div>
     <div class="menu-grid" id="menuGrid"></div>
     <div class="empty" id="empty">No encontré productos con ese filtro.</div>
@@ -328,7 +322,7 @@
 </main>
 
 <footer>
-  <div class="wrap">La Casita del Frappé · Versión 1.4 · Menú conectado a Supabase</div>
+  <div class="wrap">La Casita del Frappé · Versión 1.5 · Menú y categorías administrables</div>
 </footer>
 
 <button class="floating" id="floatingCart">🛍️ Ver pedido <span id="floatingCount">0</span></button>
@@ -384,6 +378,7 @@ const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_0vXAHodpJ_aBGnPf4o2MKQ_d5vrhlYA
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
 let PRODUCTS = [];
+let CATEGORIES = [];
 let BUSINESS_CONFIG = {
   whatsapp: "529381249478",
   horario_semana: "5:00 PM – 11:00 PM",
@@ -436,7 +431,7 @@ async function loadSupabaseData(){
   $("#menuGrid").innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)">Cargando menú...</div>';
   $("#empty").style.display = "none";
   try{
-    const [productsResult, configResult] = await Promise.all([
+    const [productsResult, configResult, categoriesResult] = await Promise.all([
       supabaseClient
         .from("productos")
         .select("id,nombre,descripcion,categoria,precio,imagen_url,disponible,destacado,orden")
@@ -446,11 +441,18 @@ async function loadSupabaseData(){
         .from("configuracion")
         .select("whatsapp,horario_semana,horario_fin_semana,negocio_abierto,aviso")
         .eq("id", 1)
-        .maybeSingle()
+        .maybeSingle(),
+      supabaseClient
+        .from("categorias")
+        .select("id,nombre,orden,activa")
+        .eq("activa", true)
+        .order("orden", {ascending:true})
+        .order("nombre", {ascending:true})
     ]);
 
     if(productsResult.error) throw productsResult.error;
     if(configResult.error) throw configResult.error;
+    if(categoriesResult.error) throw categoriesResult.error;
 
     PRODUCTS = (productsResult.data || []).map(p => ({
       id: Number(p.id),
@@ -463,20 +465,47 @@ async function loadSupabaseData(){
       order: Number(p.orden || 0)
     }));
 
+    CATEGORIES = (categoriesResult.data || []).map(c => ({
+      id: Number(c.id),
+      name: c.nombre,
+      order: Number(c.orden || 0)
+    }));
+
     if(configResult.data){
       BUSINESS_CONFIG = {...BUSINESS_CONFIG, ...configResult.data};
     }
 
     menuLoaded = true;
     applyBusinessConfig();
+    renderCategoryChips();
     renderProducts();
   }catch(err){
     console.error("Error cargando Supabase:", err);
     menuLoaded = false;
     PRODUCTS = [];
+    CATEGORIES = [];
+    $("#categoryChips").innerHTML = '<button class="chip active" data-cat="Todos">Todos</button>';
     $("#menuGrid").innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#ffb4c2"><b>No pudimos cargar el menú.</b><br><span style="color:var(--muted)">Intenta actualizar la página en unos segundos.</span></div>';
     $("#empty").style.display = "none";
   }
+}
+
+function renderCategoryChips(){
+  const validNames = CATEGORIES.map(c => c.name);
+  if(activeCat !== "Todos" && !validNames.includes(activeCat)) activeCat = "Todos";
+  $("#categoryChips").innerHTML = [
+    `<button class="chip ${activeCat === "Todos" ? "active" : ""}" data-cat="Todos">Todos</button>`,
+    ...CATEGORIES.map(c => `<button class="chip ${activeCat === c.name ? "active" : ""}" data-cat="${escapeHtml(c.name)}">${escapeHtml(c.name)}</button>`)
+  ].join("");
+
+  document.querySelectorAll(".chip").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      document.querySelectorAll(".chip").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      activeCat = btn.dataset.cat;
+      renderProducts();
+    });
+  });
 }
 
 function renderProducts(){
@@ -699,14 +728,6 @@ function sendWhatsApp(){
   clearCompletedOrder("Pedido enviado y cerrado");
 }
 
-document.querySelectorAll(".chip").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    document.querySelectorAll(".chip").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    activeCat = btn.dataset.cat;
-    renderProducts();
-  });
-});
 $("#search").addEventListener("input",renderProducts);
 ["#openCart","#heroCart","#floatingCart"].forEach(id=>$(id).addEventListener("click",openCart));
 $("#closeCart").addEventListener("click",closeCart);
