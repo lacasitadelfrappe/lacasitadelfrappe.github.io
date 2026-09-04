@@ -9,6 +9,8 @@
 :root{--bg:#0b0b0c;--panel:#151517;--panel2:#1d1d20;--text:#fff7ec;--muted:#cfc4bd;--pink:#ff8fa3;--pink2:#ffb4c2;--cream:#fff0da;--green:#25d366;--danger:#ff667f;--line:rgba(255,255,255,.09);--radius:20px}
 *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 15% 8%,rgba(255,143,163,.15),transparent 28%),var(--bg);color:var(--text);font-family:Inter,ui-rounded,"Segoe UI",system-ui,sans-serif;min-height:100vh} button,input,textarea,select{font:inherit}button{cursor:pointer}.wrap{width:min(1200px,calc(100% - 24px));margin:auto}.top{position:sticky;top:0;z-index:20;background:rgba(11,11,12,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}.topin{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0}.brand b{font-size:16px}.brand span{display:block;color:var(--muted);font-size:12px}.btn{border:0;border-radius:14px;padding:11px 14px;font-weight:900}.primary{background:var(--pink);color:#251316}.secondary{background:#26262a;color:var(--text);border:1px solid var(--line)}.danger{background:rgba(255,102,127,.12);color:#ff9cad;border:1px solid rgba(255,102,127,.25)}.green{background:var(--green);color:#082d16}.login{width:min(460px,calc(100% - 24px));margin:9vh auto;background:var(--panel);border:1px solid var(--line);border-radius:26px;padding:26px;box-shadow:0 30px 80px rgba(0,0,0,.4)}h1,h2,h3{margin-top:0}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:13px}.field label{font-size:12px;color:var(--muted);font-weight:800}.field input,.field textarea,.field select{width:100%;background:#0f0f11;color:var(--text);border:1px solid var(--line);border-radius:13px;padding:11px 12px;outline:none}.field textarea{min-height:100px;resize:vertical}.msg{min-height:22px;font-size:13px;margin-top:8px;color:var(--pink2)}#app{display:none}.hero{padding:24px 0 12px}.hero h1{font-size:clamp(32px,5vw,52px);margin-bottom:7px}.hero p{color:var(--muted);margin:0}.tabs{display:flex;gap:8px;overflow:auto;padding:12px 0 18px}.tab{white-space:nowrap;border:1px solid var(--line);background:#222226;color:var(--text);border-radius:999px;padding:10px 14px;font-weight:900}.tab.active{background:var(--pink);color:#2a1518;border-color:transparent}.panel{display:none}.panel.active{display:block}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap}.search{min-width:220px;flex:1;max-width:520px;background:#101012;border:1px solid var(--line);color:var(--text);border-radius:14px;padding:11px 13px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.card{background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.025));border:1px solid var(--line);border-radius:18px;padding:15px}.product-row{display:grid;grid-template-columns:72px 1fr auto;gap:12px;align-items:center}.thumb{width:72px;height:72px;border-radius:14px;background:#27272b;object-fit:cover;border:1px solid var(--line)}.thumb.empty{display:grid;place-items:center;color:var(--muted);font-size:11px;text-align:center}.meta b{display:block;font-size:16px}.meta small{display:block;color:var(--muted);margin-top:4px;line-height:1.35}.price{font-weight:950;color:var(--cream);font-size:19px}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.mini{border:0;border-radius:10px;padding:8px 10px;font-size:12px;font-weight:900}.category-card{display:flex;align-items:center;justify-content:space-between;gap:10px}.category-name b{display:block}.category-name small{color:var(--muted)}.switch{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}.modal{position:fixed;inset:0;background:rgba(0,0,0,.68);display:none;align-items:center;justify-content:center;z-index:100;padding:14px}.modal.show{display:flex}.modalbox{width:min(680px,100%);max-height:92vh;overflow:auto;background:#121214;border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:0 35px 90px rgba(0,0,0,.55)}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}.preview{width:100%;max-height:250px;object-fit:contain;border-radius:14px;background:#26262a;border:1px solid var(--line);display:none;margin-top:8px}.config{max-width:760px}.notice{padding:13px;border-radius:14px;background:rgba(255,143,163,.08);border:1px solid rgba(255,143,163,.18);color:var(--pink2);font-size:13px;margin-bottom:14px}.emptyState{padding:35px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:18px}.toast{position:fixed;left:50%;bottom:20px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--cream);color:#291a18;padding:10px 14px;border-radius:999px;font-weight:900;z-index:200;transition:.22s}.toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:760px){.grid{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.product-row{grid-template-columns:62px 1fr}.product-row>.price{grid-column:2}.thumb{width:62px;height:62px}.topin{align-items:flex-start}.hide-mobile{display:none}}
+
+.color-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.color-field{display:grid;grid-template-columns:56px 1fr;gap:10px;align-items:center}.color-field input[type=color]{width:56px;height:44px;padding:3px;border-radius:12px;background:#0f0f11;border:1px solid var(--line)}.media-preview{width:100%;max-height:280px;object-fit:contain;border-radius:14px;background:#0d0d0f;border:1px solid var(--line);display:none;margin-top:8px}.video-preview{width:100%;aspect-ratio:16/9;border:0;border-radius:14px;background:#000;display:none;margin-top:10px}.split{display:grid;grid-template-columns:1fr 1fr;gap:14px}.hint{font-size:12px;color:var(--muted);line-height:1.45}.subcard{background:#101012;border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:12px}@media(max-width:760px){.color-grid,.split{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -22,13 +24,15 @@
 </div>
 
 <div id="app">
-  <div class="top"><div class="wrap topin"><div class="brand"><b>La Casita del Frappé</b><span>Panel de administración</span></div><div><span id="userEmail" class="hide-mobile" style="font-size:12px;color:var(--muted);margin-right:8px"></span><button class="btn secondary" id="logoutBtn">Salir</button></div></div></div>
+  <div class="top"><div class="wrap topin"><div class="brand"><b>La Casita del Frappé</b><span>Panel de administración · Diseño y contenido</span></div><div><span id="userEmail" class="hide-mobile" style="font-size:12px;color:var(--muted);margin-right:8px"></span><button class="btn secondary" id="logoutBtn">Salir</button></div></div></div>
   <div class="wrap">
     <div class="hero"><h1>Administración del menú</h1><p>Cambia productos, categorías, fotos, precios, disponibilidad y horarios sin editar GitHub.</p></div>
     <div class="tabs">
       <button class="tab active" data-panel="productsPanel">Productos</button>
       <button class="tab" data-panel="categoriesPanel">Categorías</button>
       <button class="tab" data-panel="businessPanel">Negocio</button>
+      <button class="tab" data-panel="appearancePanel">Apariencia</button>
+      <button class="tab" data-panel="contentPanel">Contenido</button>
     </div>
 
     <section class="panel active" id="productsPanel">
@@ -51,6 +55,50 @@
         <div class="field"><label>Aviso para clientes</label><textarea id="cfgNotice" placeholder="Ej. Hoy cerramos a las 9:00 PM"></textarea></div>
         <label class="switch" style="margin:6px 0 18px"><input type="checkbox" id="cfgOpen"> Negocio abierto y recibiendo pedidos</label><br>
         <button class="btn primary" id="saveBusinessBtn">Guardar configuración</button>
+      </div>
+    </section>
+
+    <section class="panel" id="appearancePanel">
+      <div class="card config">
+        <h2>Apariencia de la página</h2>
+        <p class="hint">Cambia el logo y la paleta de colores. Los cambios aparecerán en la página pública al guardar y recargar.</p>
+        <div class="field"><label>Logo del negocio</label><input id="siteLogoFile" type="file" accept="image/*"><img id="siteLogoPreview" class="media-preview" alt="Vista previa del logo"></div>
+        <div class="color-grid">
+          <div class="field"><label>Fondo</label><div class="color-field"><input id="colorBg" type="color"><input id="colorBgText" maxlength="7"></div></div>
+          <div class="field"><label>Paneles</label><div class="color-field"><input id="colorPanel" type="color"><input id="colorPanelText" maxlength="7"></div></div>
+          <div class="field"><label>Texto</label><div class="color-field"><input id="colorText" type="color"><input id="colorTextText" maxlength="7"></div></div>
+          <div class="field"><label>Color principal</label><div class="color-field"><input id="colorPrimary" type="color"><input id="colorPrimaryText" maxlength="7"></div></div>
+          <div class="field"><label>Color secundario</label><div class="color-field"><input id="colorSecondary" type="color"><input id="colorSecondaryText" maxlength="7"></div></div>
+          <div class="field"><label>Color crema / precio</label><div class="color-field"><input id="colorCream" type="color"><input id="colorCreamText" maxlength="7"></div></div>
+        </div>
+        <div class="actions"><button class="btn primary" id="saveAppearanceBtn">Guardar apariencia</button><button class="btn secondary" id="resetPaletteBtn">Restablecer colores</button></div>
+      </div>
+    </section>
+
+    <section class="panel" id="contentPanel">
+      <div class="card config">
+        <h2>Contenido de hoy</h2>
+        <div class="subcard">
+          <h3>Frase de hoy</h3>
+          <div class="field"><label>Frase</label><input id="dailyPhrase" placeholder="Ej. Hoy mereces algo dulce ✨"></div>
+          <label class="switch"><input type="checkbox" id="dailyPhraseActive"> Mostrar la frase en la página</label>
+        </div>
+        <div class="subcard">
+          <h3>Promoción de hoy</h3>
+          <div class="field"><label>Título</label><input id="promoTitleAdmin" placeholder="Ej. 2 frappés por $150"></div>
+          <div class="field"><label>Descripción</label><textarea id="promoTextAdmin" placeholder="Describe la promoción y sus condiciones..."></textarea></div>
+          <div class="field"><label>Imagen de la promoción</label><input id="promoImageFile" type="file" accept="image/*"><img id="promoImagePreview" class="media-preview" alt="Vista previa de promoción"></div>
+          <label class="switch"><input type="checkbox" id="promoActive"> Mostrar promoción en la página</label>
+        </div>
+        <div class="subcard">
+          <h3>Video</h3>
+          <div class="field"><label>Título del video</label><input id="videoTitleAdmin" placeholder="Ej. Así preparamos nuestro frappé Oreo"></div>
+          <div class="field"><label>URL de YouTube o video</label><input id="videoUrlAdmin" placeholder="https://youtube.com/... o URL de un MP4"></div>
+          <div class="field"><label>O subir un video</label><input id="videoFile" type="file" accept="video/mp4,video/webm,video/quicktime"><div class="hint">Para que cargue rápido en celular, usa videos cortos y comprimidos.</div></div>
+          <video id="videoFilePreview" class="video-preview" controls playsinline></video>
+          <label class="switch"><input type="checkbox" id="videoActive"> Mostrar video en la página</label>
+        </div>
+        <button class="btn primary" id="saveContentBtn" style="margin-top:16px">Guardar contenido</button>
       </div>
     </section>
   </div>
@@ -121,7 +169,7 @@ async function loadAll(){
     sb.from("configuracion").select("*").eq("id",1).single()
   ]);
   if(p.error||c.error||g.error){toast("Error cargando datos");console.error(p.error,c.error,g.error);return}
-  products=p.data||[];categories=c.data||[];config=g.data;renderProducts();renderCategories();renderBusiness();fillCategorySelect();
+  products=p.data||[];categories=c.data||[];config=g.data;renderProducts();renderCategories();renderBusiness();renderAppearance();renderContent();fillCategorySelect();
 }
 
 function renderProducts(){
@@ -207,6 +255,22 @@ async function confirmDeleteCategory(dest){
 
 function renderBusiness(){if(!config)return;$("#cfgWhatsapp").value=config.whatsapp||"";$("#cfgWeek").value=config.horario_semana||"";$("#cfgWeekend").value=config.horario_fin_semana||"";$("#cfgNotice").value=config.aviso||"";$("#cfgOpen").checked=!!config.negocio_abierto}
 $("#saveBusinessBtn").addEventListener("click",async()=>{const payload={whatsapp:$("#cfgWhatsapp").value.trim(),horario_semana:$("#cfgWeek").value.trim(),horario_fin_semana:$("#cfgWeekend").value.trim(),aviso:$("#cfgNotice").value.trim(),negocio_abierto:$("#cfgOpen").checked,actualizado_en:new Date().toISOString()};const {error}=await sb.from("configuracion").update(payload).eq("id",1);if(error){toast(error.message);return}toast("Configuración guardada");await loadAll()});
+
+const DEFAULT_PALETTE={color_fondo:"#0b0b0c",color_panel:"#151517",color_texto:"#fff7ec",color_primario:"#ff8fa3",color_secundario:"#ffb4c2",color_crema:"#fff0da"};
+function validHex(v){return /^#[0-9a-f]{6}$/i.test(String(v||""))}
+function bindColorPair(colorId,textId){const c=$(colorId),t=$(textId);c.addEventListener("input",()=>t.value=c.value);t.addEventListener("input",()=>{if(validHex(t.value))c.value=t.value})}
+[["#colorBg","#colorBgText"],["#colorPanel","#colorPanelText"],["#colorText","#colorTextText"],["#colorPrimary","#colorPrimaryText"],["#colorSecondary","#colorSecondaryText"],["#colorCream","#colorCreamText"]].forEach(x=>bindColorPair(...x));
+function setColorPair(colorId,textId,value,fallback){const v=validHex(value)?value:fallback;$(colorId).value=v;$(textId).value=v}
+function renderAppearance(){if(!config)return;const logo=config.logo_url||"";$("#siteLogoPreview").src=logo;$("#siteLogoPreview").style.display=logo?"block":"none";setColorPair("#colorBg","#colorBgText",config.color_fondo,DEFAULT_PALETTE.color_fondo);setColorPair("#colorPanel","#colorPanelText",config.color_panel,DEFAULT_PALETTE.color_panel);setColorPair("#colorText","#colorTextText",config.color_texto,DEFAULT_PALETTE.color_texto);setColorPair("#colorPrimary","#colorPrimaryText",config.color_primario,DEFAULT_PALETTE.color_primario);setColorPair("#colorSecondary","#colorSecondaryText",config.color_secundario,DEFAULT_PALETTE.color_secundario);setColorPair("#colorCream","#colorCreamText",config.color_crema,DEFAULT_PALETTE.color_crema)}
+function renderContent(){if(!config)return;$("#dailyPhrase").value=config.frase_hoy||"";$("#dailyPhraseActive").checked=!!config.frase_activa;$("#promoTitleAdmin").value=config.promo_titulo||"";$("#promoTextAdmin").value=config.promo_texto||"";$("#promoActive").checked=!!config.promo_activa;$("#promoImagePreview").src=config.promo_imagen_url||"";$("#promoImagePreview").style.display=config.promo_imagen_url?"block":"none";$("#videoTitleAdmin").value=config.video_titulo||"";$("#videoUrlAdmin").value=config.video_url||"";$("#videoActive").checked=!!config.video_activo;$("#videoFilePreview").style.display="none";$("#videoFilePreview").removeAttribute("src")}
+async function uploadSiteFile(folder,file){const ext=(file.name.split(".").pop()||"bin").toLowerCase().replace(/[^a-z0-9]/g,"")||"bin";const path=`${folder}/archivo.${ext}`;const {error}=await sb.storage.from("sitio").upload(path,file,{upsert:true,contentType:file.type||undefined});if(error)throw error;const {data}=sb.storage.from("sitio").getPublicUrl(path);return data.publicUrl+`?v=${Date.now()}`}
+$("#siteLogoFile").addEventListener("change",()=>{const f=$("#siteLogoFile").files[0];if(f){$("#siteLogoPreview").src=URL.createObjectURL(f);$("#siteLogoPreview").style.display="block"}});
+$("#promoImageFile").addEventListener("change",()=>{const f=$("#promoImageFile").files[0];if(f){$("#promoImagePreview").src=URL.createObjectURL(f);$("#promoImagePreview").style.display="block"}});
+$("#videoFile").addEventListener("change",()=>{const f=$("#videoFile").files[0];if(f){$("#videoFilePreview").src=URL.createObjectURL(f);$("#videoFilePreview").style.display="block"}});
+$("#resetPaletteBtn").addEventListener("click",()=>{setColorPair("#colorBg","#colorBgText",DEFAULT_PALETTE.color_fondo,DEFAULT_PALETTE.color_fondo);setColorPair("#colorPanel","#colorPanelText",DEFAULT_PALETTE.color_panel,DEFAULT_PALETTE.color_panel);setColorPair("#colorText","#colorTextText",DEFAULT_PALETTE.color_texto,DEFAULT_PALETTE.color_texto);setColorPair("#colorPrimary","#colorPrimaryText",DEFAULT_PALETTE.color_primario,DEFAULT_PALETTE.color_primario);setColorPair("#colorSecondary","#colorSecondaryText",DEFAULT_PALETTE.color_secundario,DEFAULT_PALETTE.color_secundario);setColorPair("#colorCream","#colorCreamText",DEFAULT_PALETTE.color_crema,DEFAULT_PALETTE.color_crema)});
+$("#saveAppearanceBtn").addEventListener("click",async()=>{const values={color_fondo:$("#colorBgText").value.trim(),color_panel:$("#colorPanelText").value.trim(),color_texto:$("#colorTextText").value.trim(),color_primario:$("#colorPrimaryText").value.trim(),color_secundario:$("#colorSecondaryText").value.trim(),color_crema:$("#colorCreamText").value.trim()};if(Object.values(values).some(v=>!validHex(v))){toast("Revisa los colores: usa formato #RRGGBB");return}try{const file=$("#siteLogoFile").files[0];if(file)values.logo_url=await uploadSiteFile("branding",file);values.actualizado_en=new Date().toISOString();const {error}=await sb.from("configuracion").update(values).eq("id",1);if(error)throw error;$("#siteLogoFile").value="";toast("Apariencia guardada");await loadAll()}catch(err){toast("No se pudo guardar: "+err.message)}});
+$("#saveContentBtn").addEventListener("click",async()=>{const payload={frase_hoy:$("#dailyPhrase").value.trim(),frase_activa:$("#dailyPhraseActive").checked,promo_titulo:$("#promoTitleAdmin").value.trim(),promo_texto:$("#promoTextAdmin").value.trim(),promo_activa:$("#promoActive").checked,video_titulo:$("#videoTitleAdmin").value.trim(),video_url:$("#videoUrlAdmin").value.trim(),video_activo:$("#videoActive").checked,actualizado_en:new Date().toISOString()};try{const promoFile=$("#promoImageFile").files[0];if(promoFile)payload.promo_imagen_url=await uploadSiteFile("promocion",promoFile);const videoFile=$("#videoFile").files[0];if(videoFile)payload.video_url=await uploadSiteFile("video",videoFile);const {error}=await sb.from("configuracion").update(payload).eq("id",1);if(error)throw error;$("#promoImageFile").value="";$("#videoFile").value="";toast("Contenido guardado");await loadAll()}catch(err){toast("No se pudo guardar: "+err.message)}});
+
 </script>
 </body>
 </html>
