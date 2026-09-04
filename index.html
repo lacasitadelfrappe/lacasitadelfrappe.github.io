@@ -119,8 +119,16 @@
     color:var(--pink2);background:rgba(255,143,163,.08);border-radius:999px;padding:7px 9px
   }
   .product-img{
-    width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:16px;border:1px solid var(--line);
-    background:#101012;position:relative;z-index:2
+  width:100%;
+  aspect-ratio:1 / 1;
+  object-fit:contain;
+  object-position:center;
+  border-radius:16px;
+  border:1px solid var(--line);
+  background:#101012;
+  position:relative;
+  z-index:2;
+  padding:6px;
   }
   .product h3{font-size:20px;margin:0;position:relative;z-index:2}
   .product p{color:var(--muted);font-size:13px;line-height:1.5;margin:0;flex:1;position:relative;z-index:2}
